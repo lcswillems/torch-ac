@@ -5,7 +5,7 @@ The `torch_ac` package contains the PyTorch implementation of two Actor-Critic d
 - [Synchronous A3C (A2C)](https://arxiv.org/pdf/1602.01783.pdf)
 - [Proximal Policy Optimizations (PPO)](https://arxiv.org/pdf/1707.06347.pdf)
 
-**Note:** An example of use of this package is given in the [`rl-starter-scripts` repository](https://github.com/lcswillems/torch-rl). More details below.
+**Note:** An example of use of this package is given in the [`rl-starter-files` repository](https://github.com/lcswillems/rl-starter-files). More details below.
 
 ## Features
 

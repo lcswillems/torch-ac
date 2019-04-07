@@ -1,2 +1,2 @@
-from torch_rl.algos.a2c import A2CAlgo
-from torch_rl.algos.ppo import PPOAlgo
+from torch_ac.algos.a2c import A2CAlgo
+from torch_ac.algos.ppo import PPOAlgo

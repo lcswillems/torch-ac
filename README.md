@@ -23,6 +23,13 @@ The `torch_ac` package contains the PyTorch implementation of two Actor-Critic d
 pip3 install torch-ac
 ```
 
+**Note:** If you want to modify `torch-ac` algorithms, you will need to rather install a cloned version, i.e.:
+```
+git clone https://github.com/lcswillems/torch-ac.git
+cd torch-ac
+pip3 install -e .
+```
+
 ## Package components overview
 
 A brief overview of the components of the package:

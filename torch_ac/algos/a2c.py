@@ -18,11 +18,7 @@ class A2CAlgo(BaseAlgo):
         self.optimizer = torch.optim.RMSprop(self.acmodel.parameters(), lr,
                                              alpha=rmsprop_alpha, eps=rmsprop_eps)
 
-    def update_parameters(self):
-        # Collect experiences
-
-        exps, logs = self.collect_experiences()
-
+    def update_parameters(self, exps):
         # Compute starting indexes
 
         inds = self._get_starting_indexes()
@@ -86,11 +82,13 @@ class A2CAlgo(BaseAlgo):
 
         # Log some values
 
-        logs["entropy"] = update_entropy
-        logs["value"] = update_value
-        logs["policy_loss"] = update_policy_loss
-        logs["value_loss"] = update_value_loss
-        logs["grad_norm"] = update_grad_norm
+        logs = {
+            "entropy": update_entropy,
+            "value": update_value,
+            "policy_loss": update_policy_loss,
+            "value_loss": update_value_loss,
+            "grad_norm": update_grad_norm
+        }
 
         return logs
 

@@ -26,10 +26,8 @@ class PPOAlgo(BaseAlgo):
         self.optimizer = torch.optim.Adam(self.acmodel.parameters(), lr, eps=adam_eps)
         self.batch_num = 0
 
-    def update_parameters(self):
+    def update_parameters(self, exps):
         # Collect experiences
-
-        exps, logs = self.collect_experiences()
 
         for _ in range(self.epochs):
             # Initialize log values
@@ -119,11 +117,13 @@ class PPOAlgo(BaseAlgo):
 
         # Log some values
 
-        logs["entropy"] = numpy.mean(log_entropies)
-        logs["value"] = numpy.mean(log_values)
-        logs["policy_loss"] = numpy.mean(log_policy_losses)
-        logs["value_loss"] = numpy.mean(log_value_losses)
-        logs["grad_norm"] = numpy.mean(log_grad_norms)
+        logs = {
+            "entropy": numpy.mean(log_entropies),
+            "value": numpy.mean(log_values),
+            "policy_loss": numpy.mean(log_policy_losses),
+            "value_loss": numpy.mean(log_value_losses),
+            "grad_norm": numpy.mean(log_grad_norms)
+        }
 
         return logs
 

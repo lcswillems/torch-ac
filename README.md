@@ -11,8 +11,8 @@ The `torch_ac` package contains the PyTorch implementation of two Actor-Critic d
 
 - **Recurrent policies**
 - Reward shaping
-- Wide variety of observation spaces: tensors or dict of tensors
-- Wide variety of action spaces: discrete or continuous
+- Handle observation spaces that are tensors or _dict of tensors_
+- Handle _discrete_ or _continuous_ action spaces
 - Observation preprocessing
 - Multiprocessing
 - CUDA
@@ -75,10 +75,48 @@ DictList({"a": [1, 2], "b": [5]})
 
 Examples of use of the package components are given in the [`rl-starter-scripts` repository](https://github.com/lcswillems/torch-rl).
 
-An example of use of `torch_ac.A2CAlgo` and `torch_ac.PPOAlgo` classes is given in `scripts/train.py`.
+### Example of use of `torch_ac.A2CAlgo` and `torch_ac.PPOAlgo`
 
-An example of use of `torch_ac.DictList` is given in the `preprocess_obss` functions of `utils/format.py`.
+```python
+...
 
-An example of implementation of `torch_ac.RecurrentACModel` abstract class is defined in `model.py`
+algo = torch_ac.PPOAlgo(envs, acmodel, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
+                        args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
+                        args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss)
 
-Examples of `preprocess_obss` functions are given in `utils/format.py`.
+...
+
+exps, logs1 = algo.collect_experiences()
+logs2 = algo.update_parameters(exps)
+```
+
+More details [here](https://github.com/lcswillems/rl-starter-files/blob/master/scripts/train.py).
+
+### Example of use of `torch_ac.DictList`
+
+```python
+torch_ac.DictList({
+    "image": preprocess_images([obs["image"] for obs in obss], device=device),
+    "text": preprocess_texts([obs["mission"] for obs in obss], vocab, device=device)
+})
+```
+
+More details [here](https://github.com/lcswillems/rl-starter-files/blob/master/utils/format.py).
+
+### Example of implementation of `torch_ac.RecurrentACModel`
+
+```python
+class ACModel(nn.Module, torch_ac.RecurrentACModel):
+    ...
+
+    def forward(self, obs, memory):
+        ...
+
+        return dist, value, memory
+```
+
+More details [here](https://github.com/lcswillems/rl-starter-files/blob/master/model.py).
+
+### Examples of `preprocess_obss` functions
+
+More details [here](https://github.com/lcswillems/rl-starter-files/blob/master/utils/format.py).

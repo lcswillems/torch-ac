@@ -220,7 +220,7 @@ class BaseAlgo(ABC):
 
         keep = max(self.log_done_counter, self.num_procs)
 
-        log = {
+        logs = {
             "return_per_episode": self.log_return[-keep:],
             "reshaped_return_per_episode": self.log_reshaped_return[-keep:],
             "num_frames_per_episode": self.log_num_frames[-keep:],
@@ -232,7 +232,7 @@ class BaseAlgo(ABC):
         self.log_reshaped_return = self.log_reshaped_return[-self.num_procs:]
         self.log_num_frames = self.log_num_frames[-self.num_procs:]
 
-        return exps, log
+        return exps, logs
 
     @abstractmethod
     def update_parameters(self):

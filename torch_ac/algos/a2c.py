@@ -5,7 +5,7 @@ import torch.nn.functional as F
 from torch_ac.algos.base import BaseAlgo
 
 class A2CAlgo(BaseAlgo):
-    """The class for the Advantage Actor-Critic algorithm."""
+    """The Advantage Actor-Critic algorithm."""
 
     def __init__(self, envs, acmodel, num_frames_per_proc=None, discount=0.99, lr=0.01, gae_lambda=0.95,
                  entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, recurrence=4,

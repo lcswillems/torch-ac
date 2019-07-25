@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
 import torch
-import numpy
 
 from torch_ac.format import default_preprocess_obss
 from torch_ac.utils import DictList, ParallelEnv

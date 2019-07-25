@@ -12,7 +12,7 @@ The `torch_ac` package contains the PyTorch implementation of two Actor-Critic d
 - **Recurrent policies**
 - Reward shaping
 - Handle observation spaces that are tensors or _dict of tensors_
-- Handle _discrete_ or _continuous_ action spaces
+- Handle _discrete_ action spaces
 - Observation preprocessing
 - Multiprocessing
 - CUDA

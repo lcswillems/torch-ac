@@ -12,8 +12,6 @@ def worker(conn, env):
         elif cmd == "reset":
             obs = env.reset()
             conn.send(obs)
-        elif cmd == "kill":
-            return
         else:
             raise NotImplementedError
 
@@ -35,10 +33,6 @@ class ParallelEnv(gym.Env):
             p.daemon = True
             p.start()
             remote.close()
-
-    def __del__(self):
-        for local in self.locals:
-            local.send(("kill", None))
 
     def reset(self):
         for local in self.locals:

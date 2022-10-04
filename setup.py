@@ -8,6 +8,6 @@ setup(
     install_requires=[
         "numpy>=1.13.0",
         "torch>=1.0.0",
-        "multiprocess >= 0.70",
+        "multiprocess>=0.70",
     ],
 )

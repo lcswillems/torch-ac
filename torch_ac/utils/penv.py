@@ -6,16 +6,15 @@ def worker(conn, env):
     while True:
         cmd, data = conn.recv()
         if cmd == "step":
-            obs, reward, terminated, truncated, info = env.step(data)
-            if terminated:
+            obs, reward, done, truncated, info = env.step(data)
+            if done:
                 obs, _ = env.reset()
-            conn.send((obs, reward, terminated, truncated, info))
+            conn.send((obs, reward, done, truncated, info))
         elif cmd == "reset":
             obs, _ = env.reset()
             conn.send(obs)
         else:
             raise NotImplementedError
-
 
 class ParallelEnv(gym.Env):
     """A concurrent execution of environments in multiple processes."""
@@ -45,13 +44,10 @@ class ParallelEnv(gym.Env):
     def step(self, actions):
         for local, action in zip(self.locals, actions[1:]):
             local.send(("step", action))
-        obs, reward, terminated, truncated, info = self.envs[0].step(actions[0])
-        if terminated:
+        obs, reward, done, truncated, info = self.envs[0].step(actions[0])
+        if done:
             obs, _ = self.envs[0].reset()
-        results = zip(
-            *[(obs, reward, terminated, truncated, info)]
-            + [local.recv() for local in self.locals]
-        )
+        results = zip(*[(obs, reward, done, truncated, info)] + [local.recv() for local in self.locals])
         return results
 
     def render(self):

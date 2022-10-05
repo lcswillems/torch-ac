@@ -135,7 +135,8 @@ class BaseAlgo(ABC):
                     dist, value = self.acmodel(preprocessed_obs)
             action = dist.sample()
 
-            obs, reward, done, _, _ = self.env.step(action.cpu().numpy())
+            obs, reward, terminated, truncated, _ = self.env.step(action.cpu().numpy())
+            done = tuple(a | b for a, b in zip(terminated, truncated))
 
             # Update experiences values
 

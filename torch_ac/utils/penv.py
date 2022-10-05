@@ -1,6 +1,8 @@
-from multiprocess import Process, Pipe
+import multiprocessing
 import gymnasium as gym
 
+
+multiprocessing.set_start_method("fork")
 
 def worker(conn, env):
     while True:
@@ -28,9 +30,9 @@ class ParallelEnv(gym.Env):
 
         self.locals = []
         for env in self.envs[1:]:
-            local, remote = Pipe()
+            local, remote = multiprocessing.Pipe()
             self.locals.append(local)
-            p = Process(target=worker, args=(remote, env))
+            p = multiprocessing.Process(target=worker, args=(remote, env))
             p.daemon = True
             p.start()
             remote.close()
